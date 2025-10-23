@@ -1,208 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>WROBYN — Bold</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>WROBYN</title>
   <style>
-    /* System font stack similar to Apple's look */
-    :root{
-      --bg-1:#0f172a;
-      --bg-2:#0b1220;
-      --glass: rgba(255,255,255,0.06);
-      --accent: rgba(255,255,255,0.08);
+    html, body {
+      height: 100%;
+      margin: 0;
+      background: #000;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      overflow: hidden;
     }
 
-    *{box-sizing:border-box}
-    html,body{height:100%;margin:0;font-family: -apple-system, "SF Pro Text", "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; color: #fff;-webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;}
-
-    /* full-bleed gradient background with subtle noise-like overlay */
-    .bg {
-      min-height:100%;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:48px;
-      background:
-        radial-gradient(1200px 600px at 10% 20%, rgba(255,65,108,0.08), transparent 8%),
-        radial-gradient(1000px 500px at 90% 80%, rgba(0,122,255,0.06), transparent 10%),
-        linear-gradient(135deg, #071028 0%, #0b1530 30%, #081226 60%, #051021 100%);
-      position:relative;
-      overflow:hidden;
-    }
-
-    /* subtle vignette */
-    .bg::after{
-      content:"";
-      position:absolute;inset:0;
-      background:linear-gradient(180deg, rgba(0,0,0,0) 0%, rgba(0,0,0,0.25) 70%);
-      pointer-events:none;
-    }
-
-    .card {
-      width:min(1100px, 94vw);
-      display:grid;
-      grid-template-columns: 1fr 420px;
-      gap:32px;
-      align-items:center;
-      backdrop-filter: blur(6px) saturate(110%);
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-      border-radius:20px;
-      padding:48px;
-      box-shadow: 0 10px 40px rgba(2,6,23,0.6), 0 2px 8px rgba(0,0,0,0.5);
-      border: 1px solid rgba(255,255,255,0.04);
-    }
-
-    /* Left: big headline like Apple */
-    .hero {
-      padding-right:12px;
-    }
-    .eyebrow {
-      font-size:13px;
-      text-transform:uppercase;
-      letter-spacing:2px;
-      color: rgba(255,255,255,0.6);
-      margin-bottom:12px;
-    }
-
-    /* The bold uppercase (WROBYN) */
-    .title {
-      font-weight: 900;
-      font-size: clamp(48px, 9vw, 120px);
-      line-height: 0.9;
-      letter-spacing: -2px;
-      margin:0;
-      text-transform:uppercase;
-      color: linear-gradient(90deg,#fff 0%, #f3f3f3 100%);
-      /* create gradient text */
-      background: linear-gradient(90deg, #ffffff 0%, #d8eaff 40%, #ffd6e0 100%);
+    h1 {
+      font-size: 10vw;
+      font-weight: 1000;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      background: linear-gradient(270deg, #ff0055, #ff7b00, #00ffcc, #0077ff, #ff0055);
+      background-size: 800% 800%;
       -webkit-background-clip: text;
-      background-clip: text;
       -webkit-text-fill-color: transparent;
-      text-shadow: 0 8px 30px rgba(3,10,22,0.6);
+      animation: gradientShift 5s ease infinite;
     }
 
-    .subtitle {
-      margin-top:20px;
-      color: rgba(255,255,255,0.82);
-      font-size:18px;
-      line-height:1.5;
-      max-width:55ch;
-    }
-
-    .actions {
-      margin-top:28px;
-      display:flex;
-      gap:16px;
-      align-items:center;
-    }
-
-    .btn {
-      display:inline-flex;
-      align-items:center;
-      gap:10px;
-      padding:12px 18px;
-      border-radius:12px;
-      font-weight:700;
-      font-size:14px;
-      text-decoration:none;
-      cursor:pointer;
-      border: 1px solid rgba(255,255,255,0.06);
-      transition: transform .18s ease, box-shadow .18s ease;
-      background: linear-gradient(90deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
-      color:#fff;
-      box-shadow: 0 6px 18px rgba(2,6,23,0.5);
-    }
-    .btn:active{transform:translateY(1px)}
-    .btn.primary{
-      background: linear-gradient(90deg,#0ea5ff 0%, #7c3aed 100%);
-      box-shadow: 0 8px 30px rgba(124,58,237,0.18), 0 2px 8px rgba(0,0,0,0.5);
-      border: none;
-    }
-
-    /* Right column: card preview / mock screenshot */
-    .preview {
-      display:flex;
-      flex-direction:column;
-      gap:18px;
-      align-items:center;
-    }
-    .mock {
-      width:100%;
-      border-radius:14px;
-      overflow:hidden;
-      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2));
-      border: 1px solid rgba(255,255,255,0.04);
-      box-shadow: 0 18px 40px rgba(2,6,23,0.6);
-      padding:16px;
-    }
-
-    .mock-screen{
-      height:220px;
-      border-radius:10px;
-      background:
-        linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.2)),
-        radial-gradient(400px 160px at 10% 20%, rgba(255,65,108,0.06), transparent 10%),
-        linear-gradient(90deg,#00111a 0%, #062033 100%);
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      color:rgba(255,255,255,0.9);
-      font-weight:700;
-      font-size:18px;
-      letter-spacing:1px;
-    }
-
-    .meta {
-      display:flex;
-      width:100%;
-      justify-content:space-between;
-      gap:10px;
-      font-size:13px;
-      color:rgba(255,255,255,0.7);
-    }
-
-    /* responsive: single column on small screens */
-    @media (max-width:920px){
-      .card{grid-template-columns:1fr; padding:28px; gap:20px}
-      .title{letter-spacing:-1px}
-      .mock-screen{height:180px}
-    }
-
-    /* extra large screen tweak */
-    @media (min-width:1600px){
-      .card{padding:72px; gap:48px}
+    @keyframes gradientShift {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
   </style>
 </head>
 <body>
-  <div class="bg">
-    <main class="card" role="main" aria-labelledby="wro-title">
-      <div class="hero">
-        <div class="eyebrow">Introducing</div>
-        <h1 id="wro-title" class="title">WROBYN</h1>
-        <p class="subtitle">
-          A minimalist, bold experience — crafted to feel modern, calm and confident.
-          This spot is designed to mimic the large, airy typography and clean layout you see on premium product pages.
-        </p>
-
-        <div class="actions">
-          <a class="btn primary" href="#" aria-label="Get started">Get Started</a>
-          <a class="btn" href="#" aria-label="Learn more">Learn more</a>
-        </div>
-      </div>
-
-      <aside class="preview" aria-label="Preview">
-        <div class="mock" role="img" aria-label="Preview mockup">
-          <div class="mock-screen">WROBYN — HOME PREVIEW</div>
-        </div>
-
-        <div class="meta">
-          <div>Version <strong>1.0</strong></div>
-          <div>Made with ♥ in India</div>
-        </div>
-      </aside>
-    </main>
-  </div>
+  <h1>WROBYN</h1>
 </body>
 </html>
